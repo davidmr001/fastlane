@@ -7,7 +7,8 @@ module FastlaneCore
 
       $stdout.sync = true
 
-      if Helper.is_test?
+      if Helper.is_test? && !ENV.key?("FASTLANE_FORCE_LOGS")
+        $stdout.puts "Logging disabled while running tests. Force them by setting FASTLANE_FORCE_LOGS"
         @log ||= Logger.new(nil) # don't show any logs when running tests
       else
         @log ||= Logger.new($stdout)
